@@ -1,11 +1,11 @@
 package libraryms;
 
-import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.table.DefaultTableModel;
 
 public class CombineV2 extends JFrame {
 
@@ -314,8 +314,7 @@ public class CombineV2 extends JFrame {
             }
 
             // Use try-with-resources to ensure proper resource management
-            try (Connection conn = DriverManager.getConnection(url);
-                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            try (Connection conn = DriverManager.getConnection(url); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
                 // Set parameters
                 pstmt.setString(1, bookTitle);
@@ -346,199 +345,209 @@ public class CombineV2 extends JFrame {
         }
     }
     // EditBookForm class to edit an existing book
-class EditBookForm extends JPanel {
-    private JTextField titleFieldInput;
-    private JTextField authorFieldInput;
-    private JTextField genreFieldInput;
-    private JTextArea descriptionAreaInput;
-    private JButton updateButton;
-    private JButton cancelButton;
-    private String originalTitle; // Store the original title to identify the book to update
 
-    public EditBookForm(String title, String author, String genre, String description) {
-        originalTitle = title;
-        setLayout(new BorderLayout(10, 10));
-        setBackground(new Color(245, 245, 245)); // Light gray background
+    class EditBookForm extends JPanel {
 
-        // Create a panel for form fields
-        JPanel formPanelInput = new JPanel();
-        formPanelInput.setLayout(new GridBagLayout());
-        formPanelInput.setBackground(new Color(245, 245, 245)); // Light gray background
+        private JTextField titleFieldInput;
+        private JTextField authorFieldInput;
+        private JTextField genreFieldInput;
+        private JTextArea descriptionAreaInput;
+        private JButton updateButton;
+        private JButton cancelButton;
+        private String originalTitle; // Store the original title to identify the book to update
 
-        // Define GridBagConstraints for centering components
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); // Padding around components
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
+        public EditBookForm(String title, String author, String genre, String description) {
+            originalTitle = title;
+            setLayout(new BorderLayout(10, 10));
+            setBackground(new Color(245, 245, 245)); // Light gray background
 
-        // Create and style components
-        JLabel titleLabelInput = new JLabel("Title:");
-        styleLabel(titleLabelInput);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        formPanelInput.add(titleLabelInput, gbc);
+            // Create a panel for form fields
+            JPanel formPanelInput = new JPanel();
+            formPanelInput.setLayout(new GridBagLayout());
+            formPanelInput.setBackground(new Color(245, 245, 245)); // Light gray background
 
-        titleFieldInput = new JTextField(title);
-        styleTextField(titleFieldInput);
-        gbc.gridx = 1;
-        formPanelInput.add(titleFieldInput, gbc);
+            // Define GridBagConstraints for centering components
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.insets = new Insets(10, 10, 10, 10); // Padding around components
+            gbc.anchor = GridBagConstraints.CENTER;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.weightx = 1.0;
 
-        JLabel authorLabelInput = new JLabel("Author:");
-        styleLabel(authorLabelInput);
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        formPanelInput.add(authorLabelInput, gbc);
+            // Create and style components
+            JLabel titleLabelInput = new JLabel("Title:");
+            styleLabel(titleLabelInput);
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            formPanelInput.add(titleLabelInput, gbc);
 
-        authorFieldInput = new JTextField(author);
-        styleTextField(authorFieldInput);
-        gbc.gridx = 1;
-        formPanelInput.add(authorFieldInput, gbc);
+            titleFieldInput = new JTextField(title);
+            styleTextField(titleFieldInput);
+            gbc.gridx = 1;
+            formPanelInput.add(titleFieldInput, gbc);
 
-        JLabel genreLabelInput = new JLabel("Genre:");
-        styleLabel(genreLabelInput);
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        formPanelInput.add(genreLabelInput, gbc);
+            JLabel authorLabelInput = new JLabel("Author:");
+            styleLabel(authorLabelInput);
+            gbc.gridx = 0;
+            gbc.gridy = 1;
+            formPanelInput.add(authorLabelInput, gbc);
 
-        genreFieldInput = new JTextField(genre);
-        styleTextField(genreFieldInput);
-        gbc.gridx = 1;
-        formPanelInput.add(genreFieldInput, gbc);
+            authorFieldInput = new JTextField(author);
+            styleTextField(authorFieldInput);
+            gbc.gridx = 1;
+            formPanelInput.add(authorFieldInput, gbc);
 
-        JLabel descriptionLabelInput = new JLabel("Description:");
-        styleLabel(descriptionLabelInput);
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.anchor = GridBagConstraints.NORTHWEST;
-        formPanelInput.add(descriptionLabelInput, gbc);
+            JLabel genreLabelInput = new JLabel("Genre:");
+            styleLabel(genreLabelInput);
+            gbc.gridx = 0;
+            gbc.gridy = 2;
+            formPanelInput.add(genreLabelInput, gbc);
 
-        descriptionAreaInput = new JTextArea(6, 30);
-        descriptionAreaInput.setLineWrap(true);
-        descriptionAreaInput.setWrapStyleWord(true);
-        descriptionAreaInput.setText(description);
-        JScrollPane scrollPane = new JScrollPane(descriptionAreaInput);
-        styleTextArea(scrollPane);
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-        formPanelInput.add(scrollPane, gbc);
+            genreFieldInput = new JTextField(genre);
+            styleTextField(genreFieldInput);
+            gbc.gridx = 1;
+            formPanelInput.add(genreFieldInput, gbc);
 
-        // Create a panel for buttons
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+            JLabel descriptionLabelInput = new JLabel("Description:");
+            styleLabel(descriptionLabelInput);
+            gbc.gridx = 0;
+            gbc.gridy = 3;
+            gbc.anchor = GridBagConstraints.NORTHWEST;
+            formPanelInput.add(descriptionLabelInput, gbc);
 
-        updateButton = new JButton("Update");
-        updateButton.setFont(new Font("Arial", Font.BOLD, 14));
-        updateButton.setPreferredSize(new Dimension(100, 30));
-        updateButton.setBackground(new Color(70, 130, 180));
-        updateButton.setForeground(Color.WHITE);
-        updateButton.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
-        updateButton.setFocusPainted(false);
-        updateButton.setBorder(new RoundedBorder(15));
-        buttonPanel.add(updateButton);
+            descriptionAreaInput = new JTextArea(6, 30);
+            descriptionAreaInput.setLineWrap(true);
+            descriptionAreaInput.setWrapStyleWord(true);
+            descriptionAreaInput.setText(description);
+            JScrollPane scrollPane = new JScrollPane(descriptionAreaInput);
+            styleTextArea(scrollPane);
+            gbc.gridx = 1;
+            gbc.gridy = 3;
+            gbc.weighty = 1.0;
+            gbc.fill = GridBagConstraints.BOTH;
+            formPanelInput.add(scrollPane, gbc);
 
-        cancelButton = new JButton("Cancel");
-        cancelButton.setFont(new Font("Arial", Font.BOLD, 14));
-        cancelButton.setPreferredSize(new Dimension(100, 30));
-        cancelButton.setBackground(new Color(180, 70, 70));
-        cancelButton.setForeground(Color.WHITE);
-        cancelButton.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
-        cancelButton.setFocusPainted(false);
-        cancelButton.setBorder(new RoundedBorder(15));
-        buttonPanel.add(cancelButton);
+            // Create a panel for buttons
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
-        // Add formPanel and buttonPanel to the main panel
-        add(formPanelInput, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);
+            updateButton = new JButton("Update");
+            updateButton.setFont(new Font("Arial", Font.BOLD, 14));
+            updateButton.setPreferredSize(new Dimension(100, 30));
+            updateButton.setBackground(new Color(70, 130, 180));
+            updateButton.setForeground(Color.WHITE);
+            updateButton.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
+            updateButton.setFocusPainted(false);
+            updateButton.setBorder(new RoundedBorder(15));
+            buttonPanel.add(updateButton);
 
-        // Set up button actions
-        updateButton.addActionListener(e -> updateBook());
+            cancelButton = new JButton("Cancel");
+            cancelButton.setFont(new Font("Arial", Font.BOLD, 14));
+            cancelButton.setPreferredSize(new Dimension(100, 30));
+            cancelButton.setBackground(new Color(180, 70, 70));
+            cancelButton.setForeground(Color.WHITE);
+            cancelButton.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
+            cancelButton.setFocusPainted(false);
+            cancelButton.setBorder(new RoundedBorder(15));
+            buttonPanel.add(cancelButton);
 
-        cancelButton.addActionListener(e -> {
-            // Code to go back to the previous panel, e.g., remove the EditBookForm from the centerPanel
-            Container parent = getParent();
-            if (parent != null) {
-                parent.remove(this);
-                parent.revalidate();
-                parent.repaint();
-            }
-        });
-    }
+            // Add formPanel and buttonPanel to the main panel
+            add(formPanelInput, BorderLayout.CENTER);
+            add(buttonPanel, BorderLayout.SOUTH);
 
-    private void styleLabel(JLabel label) {
-        label.setFont(new Font("Arial", Font.BOLD, 16));
-        label.setForeground(new Color(50, 50, 150));
-    }
+            // Set up button actions
+            updateButton.addActionListener(e -> updateBook());
 
-    private void styleTextField(JTextField textField) {
-        textField.setFont(new Font("Arial", Font.PLAIN, 14));
-        textField.setBorder(BorderFactory.createLineBorder(new Color(100, 100, 100), 1));
-        textField.setPreferredSize(new Dimension(200, 30));
-    }
-
-    private void styleTextArea(JScrollPane scrollPane) {
-        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(100, 100, 100), 1));
-    }
-
-    private void updateBook() {
-        // Retrieve values from the form
-        String bookTitle = titleFieldInput.getText().trim();
-        String bookAuthor = authorFieldInput.getText().trim();
-        String bookGenre = genreFieldInput.getText().trim();
-        String bookDescription = descriptionAreaInput.getText().trim();
-
-        // Validate input
-        if (bookTitle.isEmpty() || bookAuthor.isEmpty() || bookGenre.isEmpty() || bookDescription.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "All fields are required. Please fill in all fields.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Database URL and SQL statement
-        String url = "jdbc:ucanaccess://D:/MSAccess/habdb.accdb";
-        String sql = "UPDATE Books SET title = ?, author = ?, genre = ?, description = ? WHERE title = ?";
-
-        // Register UCanAccess driver
-        try {
-            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-        } catch (ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(this, "UCanAccess driver not found.", "Driver Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-            return;
-        }
-
-        // Use try-with-resources to ensure proper resource management
-        try (Connection conn = DriverManager.getConnection(url);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            // Set parameters
-            pstmt.setString(1, bookTitle);
-            pstmt.setString(2, bookAuthor);
-            pstmt.setString(3, bookGenre);
-            pstmt.setString(4, bookDescription);
-            pstmt.setString(5, originalTitle);
-
-            // Execute the update
-            int rowsAffected = pstmt.executeUpdate();
-
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(this, "Book updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            cancelButton.addActionListener(e -> {
+                // Code to go back to the previous panel, e.g., remove the EditBookForm from the centerPanel
                 Container parent = getParent();
                 if (parent != null) {
                     parent.remove(this);
                     parent.revalidate();
                     parent.repaint();
+                    
                 }
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to update the book. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                centerPanel.removeAll();
+                centerPanel.add(new ViewBookPanel(), BorderLayout.CENTER);
+                centerPanel.revalidate();
+                centerPanel.repaint();
+            });
+        }
+
+        private void styleLabel(JLabel label) {
+            label.setFont(new Font("Arial", Font.BOLD, 16));
+            label.setForeground(new Color(50, 50, 150));
+        }
+
+        private void styleTextField(JTextField textField) {
+            textField.setFont(new Font("Arial", Font.PLAIN, 14));
+            textField.setBorder(BorderFactory.createLineBorder(new Color(100, 100, 100), 1));
+            textField.setPreferredSize(new Dimension(200, 30));
+        }
+
+        private void styleTextArea(JScrollPane scrollPane) {
+            scrollPane.setBorder(BorderFactory.createLineBorder(new Color(100, 100, 100), 1));
+        }
+
+        private void updateBook() {
+            // Retrieve values from the form
+            String bookTitle = titleFieldInput.getText().trim();
+            String bookAuthor = authorFieldInput.getText().trim();
+            String bookGenre = genreFieldInput.getText().trim();
+            String bookDescription = descriptionAreaInput.getText().trim();
+
+            // Validate input
+            if (bookTitle.isEmpty() || bookAuthor.isEmpty() || bookGenre.isEmpty() || bookDescription.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "All fields are required. Please fill in all fields.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "An error occurred while updating the book.", "Error", JOptionPane.ERROR_MESSAGE);
+
+            // Database URL and SQL statement
+            String url = "jdbc:ucanaccess://D:/MSAccess/habdb.accdb";
+            String sql = "UPDATE Books SET title = ?, author = ?, genre = ?, description = ? WHERE title = ?";
+
+            // Register UCanAccess driver
+            try {
+                Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+            } catch (ClassNotFoundException e) {
+                JOptionPane.showMessageDialog(this, "UCanAccess driver not found.", "Driver Error", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+                return;
+            }
+
+            // Use try-with-resources to ensure proper resource management
+            try (Connection conn = DriverManager.getConnection(url); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+                // Set parameters
+                pstmt.setString(1, bookTitle);
+                pstmt.setString(2, bookAuthor);
+                pstmt.setString(3, bookGenre);
+                pstmt.setString(4, bookDescription);
+                pstmt.setString(5, originalTitle);
+
+                // Execute the update
+                int rowsAffected = pstmt.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    JOptionPane.showMessageDialog(this, "Book updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    Container parent = getParent();
+                    if (parent != null) {
+                        parent.remove(this);
+                        parent.revalidate();
+                        parent.repaint();
+                    }
+                    centerPanel.removeAll();
+                    centerPanel.add(new ViewBookPanel(), BorderLayout.CENTER);
+                    centerPanel.revalidate();
+                    centerPanel.repaint();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Failed to update the book. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "An error occurred while updating the book.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
-}
 
     // Panel to view books
     class ViewBookPanel extends JPanel {
@@ -622,9 +631,7 @@ class EditBookForm extends JPanel {
             }
 
             // Use try-with-resources to ensure proper resource management
-            try (Connection conn = DriverManager.getConnection(url);
-                 Statement stmt = conn.createStatement();
-                 ResultSet rs = stmt.executeQuery(sql)) {
+            try (Connection conn = DriverManager.getConnection(url); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
 
                 // Clear existing rows
                 tableModel.setRowCount(0);
@@ -661,7 +668,6 @@ class EditBookForm extends JPanel {
             }
         }
 
-
         private void deleteBook() {
             int selectedRow = bookTable.getSelectedRow();
             if (selectedRow >= 0) {
@@ -685,8 +691,7 @@ class EditBookForm extends JPanel {
                     }
 
                     // Use try-with-resources to ensure proper resource management
-                    try (Connection conn = DriverManager.getConnection(url);
-                         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                    try (Connection conn = DriverManager.getConnection(url); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
                         // Set parameters
                         pstmt.setString(1, title);
