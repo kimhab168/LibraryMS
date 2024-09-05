@@ -3,8 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/RUPP/LibraryMS/src/libraryms/Combine.java</file>
-            <file>file:/E:/RUPP/LibraryMS/src/libraryms/CombineV2.java</file>
+            <file>file:/E:/RUPP/LibraryMS/src/libraryms/borrowBookUI.java</file>
+            <file>file:/E:/RUPP/LibraryMS/src/libraryms/ModernLibraryUI.java</file>
+            <file>file:/E:/RUPP/LibraryMS/src/libraryms/Login_form.java</file>
+            <file>file:/E:/RUPP/LibraryMS/src/libraryms/LibraryMS.java</file>
+            <file>file:/E:/RUPP/LibraryMS/src/libraryms/DeveloperMenu.java</file>
+            <file>file:/E:/RUPP/LibraryMS/src/libraryms/Form_Register.java</file>
         </group>
     </open-files>
 </project-private>
